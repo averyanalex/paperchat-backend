@@ -91,7 +91,7 @@ func main() {
 	db.Create(&Product{Code: "D42", Price: 100})
 	db.Create(&User{Name: "Ivan"})
 	var gg Guild
-	chanls := []Channel{Channel{Name: "C", GuildID: gg.ID}}
+	chanls := []Channel{{Name: "C", GuildID: gg.ID}}
 	//chanls.append(Channel{Name: "C", GuildID: gg.ID})
 	gg = Guild{Name: "Guild", Channels: chanls}
 	db.Create(&gg)
