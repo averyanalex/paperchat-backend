@@ -1,4 +1,4 @@
-name: Build
+name: Build Dev
 on:
   push:
     branches: [master, main]
@@ -23,14 +23,14 @@ jobs:
           username: averyanalex
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-         run: ls && ls / && pwd
-      -
         name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: averyanalex/nnm:latest
+          tags: |
+            averyanalex/nnm:dev
+            averyanalex/nnm:$GITHUB_SHA
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
