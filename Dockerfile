@@ -2,7 +2,7 @@
 FROM golang:alpine as builder
 ENV LANG C.UTF-8
 
-COPY /home/runner/work/nnm/nnm /src
+COPY / /src
 RUN set -ex \
  && apk --no-cache add \
       build-base \
