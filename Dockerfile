@@ -4,7 +4,7 @@ ENV LANG C.UTF-8
 
 COPY / /src
 RUN set -ex \
- && ls -a / \
+ && ls -a /src \
  && apk --no-cache add \
       build-base \
  && cd /src \
