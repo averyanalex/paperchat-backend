@@ -61,6 +61,10 @@ func main() {
     panic(err)
   }
   db.AutoMigrate(&Product{})
+  db.AutoMigrate(&User{})
+  db.AutoMigrate(&Guild{})
+  db.AutoMigrate(&Channel{})
+  db.AutoMigrate(&Message{})
 	r := gin.Default()
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
@@ -71,10 +75,27 @@ func main() {
 		name := c.Param("name")
     db.Create(&Product{Code: name, Price: 100})
 		c.String(http.StatusOK, "Hello %s", name)
-
 	})
+
+  r.GET("/send/:guild/:channel/:text/:user", func(c *gin.Context) {
+    //channel_id := c.Param("channel")
+    //guild_id := c.Param("guild")
+    var channel Channel
+    db.First(&channel, c.Param("channel"))
+    var user User
+    db.First(&user, c.Param("user"))
+    db.Create(&Message{Content: c.Param("text"), User: user, Channel: channel})
+    c.JSON(200, channel)
+  })
   // Create
   db.Create(&Product{Code: "D42", Price: 100})
+  db.Create(&User{Name: "Ivan"})
+  var gg Guild
+  chanls := []Channel{Channel{Name: "C", GuildID: gg.ID}}
+  //chanls.append(Channel{Name: "C", GuildID: gg.ID})
+  gg = Guild{Name: "Guild", Channels: chanls}
+  db.Create(&gg)
+  //db.Create(&Channel{Name: "C", GuildID: gg.ID})
 
   // Read
   var product Product
