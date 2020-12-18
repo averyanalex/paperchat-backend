@@ -1,3 +1,4 @@
+[![CodeFactor](https://goreportcard.com/badge/github.com/averyanalex/nnm)](https://www.codefactor.io/repository/github/averyanalex/garold)
 # NNM
 Ne Nuzhno Messenger.
 Что это такое?
