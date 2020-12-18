@@ -2,13 +2,12 @@
 FROM golang:alpine as builder
 ENV LANG C.UTF-8
 
+COPY /home/runner/work/nnm/nnm /src
 RUN set -ex \
  && apk --no-cache add \
       build-base \
- && git clone "https://github.com/yggdrasil-network/yggdrasil-go.git" /src \
  && cd /src \
- && git reset --hard v${YGGDRASIL_VERSION} \
- && GOARCH=$BUILD_ARCH ./build
+ && go build -v
 
 #build container
 FROM alpine
@@ -18,10 +17,7 @@ ENV LANG C.UTF-8
 LABEL maintainer "AveryanAlex <averyanalex@gmail.com>"
 
 
-COPY --from=builder /src/yggdrasil    /usr/bin/
-COPY --from=builder /src/yggdrasilctl /usr/bin/
-COPY                start.sh          /
-RUN chmod a+x /start.sh
+COPY --from=builder /src/main  /usr/bin/
 RUN set -ex
 
-CMD [ "/start.sh" ]
+CMD [ "/bin/main" ]
