@@ -27,7 +27,7 @@ jobs:
           push: true
           tags: |
             averyanalex/nnm:dev
-            averyanalex/nnm:${{ env.GITHUB_SHA }}
+            averyanalex/nnm:${{ github.GITHUB_SHA }}
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
