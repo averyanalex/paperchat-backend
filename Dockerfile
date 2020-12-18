@@ -11,7 +11,7 @@ RUN set -ex \
  && GOARCH=$BUILD_ARCH ./build
 
 #build container
-FROM $BUILD_FROM
+FROM alpine
 
 ENV LANG C.UTF-8
 
