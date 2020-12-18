@@ -20,8 +20,6 @@ LABEL maintainer "AveryanAlex <averyanalex@gmail.com>"
 
 COPY --from=builder /src/yggdrasil    /usr/bin/
 COPY --from=builder /src/yggdrasilctl /usr/bin/
-COPY                start.sh          /
-RUN chmod a+x /start.sh
 RUN set -ex
 
-CMD [ "/start.sh" ]
+CMD [ "/bin/main" ]
