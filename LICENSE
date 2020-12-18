@@ -1,24 +1,22 @@
-This is free and unencumbered software released into the public domain.
-
-Anyone is free to copy, modify, publish, use, compile, sell, or
-distribute this software, either in source code form or as a compiled
-binary, for any purpose, commercial or non-commercial, and by any
-means.
-
-In jurisdictions that recognize copyright laws, the author or authors
-of this software dedicate any and all copyright interest in the
-software to the public domain. We make this dedication for the benefit
-of the public at large and to the detriment of our heirs and
-successors. We intend this dedication to be an overt act of
-relinquishment in perpetuity of all present and future rights to this
-software under copyright law.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
-
-For more information, please refer to <https://unlicense.org>
+# NNM
+Ne Nuzhno Messenger.
+Что это такое?
+Это продвинутый мессенджер, в котором не просто групповые чаты
+и админы (как в WhatsApp), а группы с любым колчеством чатов, закреплением
+сообщений, настраиваемыми правами и ролями пользователей
+(на конкретном сервере). Так же должны быть личные сообщения.
+По факту, свободный клон Discord.
+Данный проект является Just For Fun свободной заменой Discord.
+Оно будет (ну или нет) состоять из: API на GO и фронтенды.
+Сначала тестовый CLI, потом чего-нибудь на QT. Данные будет
+хранить в MySQL, работать в Docker, наверное. Сначала напишем
+хранение сообщений, их отправку и получение (вообще без
+авторизаций). Возможно система "уведомлений" о сообщениях
+будет работать на MQTT.
+# Как это работает
+Во фронтенде есть менеджер аккаунтов. Можно зайти в
+несколько аккаунтов на нескольких серверах. По умолчанию
+предлагается войти/зарегистрироваться на официальном.
+На каждом сервере есть ЛС и группы (сервера дискорда).
+В группах чаты. Также группа имеет роли и возможность
+назначать пользоватеям роли с различными правами.
