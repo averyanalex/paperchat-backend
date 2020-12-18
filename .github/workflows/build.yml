@@ -23,6 +23,8 @@ jobs:
           username: averyanalex
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
+         run: ls && ls / && pwd
+      -
         name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
