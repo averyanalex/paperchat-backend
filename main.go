@@ -11,7 +11,7 @@ import (
 	"gorm.io/gorm"
 )
 
-//test
+//test 2
 func readConfig() {
 	var err error
 
