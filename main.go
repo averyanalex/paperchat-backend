@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
+	"net/http"
+	"os"
+
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"net/http"
-	"os"
 )
 
 func readConfig() {
