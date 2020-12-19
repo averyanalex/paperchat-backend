@@ -1,5 +1,6 @@
 package main
 
+// User is a structure than contain user data
 type User struct {
 	ID      uint     `json:"id" gorm:"primary_key"`
 	Name    string   `json:"name" gorm:"size:30"`
@@ -7,6 +8,7 @@ type User struct {
 	Friends []*User  `gorm:"many2many:user_friends"`
 }
 
+// Guild contain guild data
 type Guild struct {
 	ID       uint      `json:"id" gorm:"primary_key"`
 	Name     string    `json:"name" gorm:"size:30"`
@@ -14,12 +16,14 @@ type Guild struct {
 	Channels []Channel `gorm:"many2many:guild_channels"`
 }
 
+// Channel containt channel info
 type Channel struct {
 	ID      uint   `json:"id" gorm:"primary_key"`
 	Name    string `json:"name" gorm:"size:30"`
 	GuildID uint
 }
 
+// Message info
 type Message struct {
 	ID        uint   `json:"id" gorm:"primary_key"`
 	Content   string `json:"content"`
