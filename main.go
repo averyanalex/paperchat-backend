@@ -11,7 +11,7 @@ import (
 	"go.uber.org/fx"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"github.com/averyanalex/utils"
+	"github.com/averyanalex/nnm/utils"
 )
 
 func main() {
