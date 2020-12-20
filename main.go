@@ -60,6 +60,8 @@ func register(router *gin.Engine, handlers *Handlers) {
 		c.String(200, "Hello!")
 	})
 	router.GET("/ping", handlers.Ping)
+	router.GET("/send/:msg", handlers.Send)
+	router.GET("/get", handlers.GetMsgs)
 }
 
 func ping(c *gin.Context, db *gorm.DB) {
