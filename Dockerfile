@@ -18,7 +18,7 @@ ENV LANG C.UTF-8
 LABEL maintainer "AveryanAlex <averyanalex@gmail.com>"
 
 
-COPY --from=builder /src/main  /usr/local/bin/
+COPY --from=builder /src/nnm  /usr/local/bin/
 RUN set -ex
 
 CMD [ "/usr/local/bin/nnm" ]
