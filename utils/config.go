@@ -7,7 +7,8 @@ import (
 	"github.com/spf13/viper"
 )
 
-func readConfig() {
+// ReadConfig will read configs and env to viper
+func ReadConfig() {
 	var err error
 
 	viper.SetConfigFile("base.env")

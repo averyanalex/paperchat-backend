@@ -1,4 +1,4 @@
-module main
+module github.com/averyanalex/nnm
 
 go 1.14
 

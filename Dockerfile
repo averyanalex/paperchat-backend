@@ -21,4 +21,4 @@ LABEL maintainer "AveryanAlex <averyanalex@gmail.com>"
 COPY --from=builder /src/main  /usr/local/bin/
 RUN set -ex
 
-CMD [ "/usr/local/bin/main" ]
+CMD [ "/usr/local/bin/nnm" ]

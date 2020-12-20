@@ -67,7 +67,7 @@ func ping(c *gin.Context, db *gorm.DB) {
 
 func newDB(logger *log.Logger) *gorm.DB {
 	logger.Print("Executing newDB")
-	readConfig()
+	utils.ReadConfig()
 	dsn := viper.GetString("db.user") + ":" + viper.GetString("db.password") + "@tcp(" + viper.GetString("db.address") + ":" + viper.GetString("db.port") + ")/" + viper.GetString("db.name") + "?" + viper.GetString("db.arguments")
 	//fmt.Println(dsn)
 	db, err := gorm.Open(mysql.New(mysql.Config{
