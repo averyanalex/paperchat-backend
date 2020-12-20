@@ -2,12 +2,11 @@
 FROM golang:alpine as builder
 ENV LANG C.UTF-8
 
-COPY / /src
+COPY / /src/nnm
 RUN set -ex \
- && ls -a /src \
  && apk --no-cache add \
       build-base \
- && cd /src \
+ && cd /src/nnm \
  && go build -v
 
 #build container
@@ -18,7 +17,10 @@ ENV LANG C.UTF-8
 LABEL maintainer "AveryanAlex <averyanalex@gmail.com>"
 
 
-COPY --from=builder /src/nnm  /usr/local/bin/
-RUN set -ex
+COPY --from=builder /src/nnm/nnm  /app/bin
+RUN set -ex \
+ && mkdir -p /app/{config,public,storage}
 
-CMD [ "/usr/local/bin/nnm" ]
+ENTRYPOINT ["/app/bin/nnm"]
+CMD ["start"]
+WORKDIR /app
