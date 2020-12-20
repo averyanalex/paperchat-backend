@@ -18,7 +18,7 @@ ENV LANG C.UTF-8
 LABEL maintainer "AveryanAlex <averyanalex@gmail.com>"
 
 
-COPY --from=builder /src/main  /usr/bin/
+COPY --from=builder /src/main  /usr/local/bin/
 RUN set -ex
 
-CMD [ "/bin/main" ]
+CMD [ "/usr/local/bin/main" ]

@@ -58,6 +58,11 @@ func register(router *gin.Engine, db *gorm.DB) {
 	router.GET("/", func(c *gin.Context) {
 		c.String(200, "Hello!")
 	})
+	router.GET("/ping")
+}
+
+func ping(c *gin.Context, db *gorm.DB) {
+	c.String(http.StatusOK, "Pong")
 }
 
 func newDB(logger *log.Logger) *gorm.DB {
@@ -98,6 +103,18 @@ func readConfig() {
 		fmt.Println("WARNING: file .env not found")
 	} else {
 		viper.SetConfigFile(".env")
+		viper.SetConfigType("yaml")
+		err = viper.MergeInConfig()
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+	}
+
+	if _, err := os.Stat("/etc/nnm/base.env"); os.IsNotExist(err) {
+		fmt.Println("WARNING: file base.env not found")
+	} else {
+		viper.SetConfigFile("/etc/nnm/base.env")
 		viper.SetConfigType("yaml")
 		err = viper.MergeInConfig()
 		if err != nil {
