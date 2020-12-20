@@ -6,12 +6,12 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/averyanalex/nnm/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"go.uber.org/fx"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"github.com/averyanalex/nnm/utils"
 )
 
 func main() {
@@ -20,6 +20,7 @@ func main() {
 			newLogger,
 			newGin,
 			newDB,
+			newHandlers,
 		),
 		fx.Invoke(register),
 	)
@@ -54,11 +55,11 @@ func newLogger() *log.Logger {
 	return logger
 }
 
-func register(router *gin.Engine, db *gorm.DB) {
+func register(router *gin.Engine, handlers *Handlers) {
 	router.GET("/", func(c *gin.Context) {
 		c.String(200, "Hello!")
 	})
-	router.GET("/ping")
+	router.GET("/ping", handlers.Ping)
 }
 
 func ping(c *gin.Context, db *gorm.DB) {
@@ -86,4 +87,8 @@ func newDB(logger *log.Logger) *gorm.DB {
 	db.AutoMigrate(&Channel{})
 	db.AutoMigrate(&Message{})
 	return db
+}
+
+func newHandlers(db *gorm.DB) *Handlers {
+	return SetupHandlers(db)
 }
