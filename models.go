@@ -13,6 +13,8 @@ type User struct {
 	Name    string   `json:"name" gorm:"size:30"`
 	Guilds  []*Guild `gorm:"many2many:user_guilds"`
 	Friends []*User  `gorm:"many2many:user_friends"`
+	Password string    `json:"password"`
+	Email    string    `json:"email"`
 }
 
 // Guild contain guild data

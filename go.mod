@@ -4,6 +4,7 @@ go 1.14
 
 require (
 	github.com/gin-gonic/gin v1.6.3
+	github.com/pquerna/otp v1.3.0
 	github.com/spf13/viper v1.7.1
 	go.uber.org/fx v1.13.1
 	gorm.io/driver/mysql v1.0.3

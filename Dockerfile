@@ -21,6 +21,6 @@ COPY --from=builder /src/nnm/nnm  /app/bin
 RUN set -ex \
  && mkdir -p /app/{config,public,storage}
 
-ENTRYPOINT ["/app/bin/nnm"]
-CMD ["start"]
-WORKDIR /app
+//ENTRYPOINT ["/app/bin/nnm"]
+CMD ["/app/bin/nnm"]
+WORKDIR /etc/nnm

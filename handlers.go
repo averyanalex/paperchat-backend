@@ -21,7 +21,7 @@ func (h Handlers) Ping(c *gin.Context) {
 
 // Send will save sent message
 func (h Handlers) Send(c *gin.Context) {
-	content, contentGiven:= c.GetQuery("content")
+	content, contentGiven := c.GetQuery("content")
 	if contentGiven {
 		msg := &Message{Content: content}
 		h.DB.Create(msg)
@@ -61,4 +61,10 @@ func (h Handlers) GetMsgs(c *gin.Context) {
 		h.DB.Model(&Message{}).Order("id DESC").Limit(count).Find(&msg)
 	}
 	c.JSON(200, msg)
+}
+
+// Register handle user registration
+func (h Handlers) Register(c *gin.Context) {
+	h.DB.Create(&User{Name: c.PostForm("name"), Password: c.PostForm("password"), Email: c.PostForm("mail")})
+	c.String(200, "OK")
 }

@@ -2,12 +2,14 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
 
 	"github.com/averyanalex/nnm/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/pquerna/otp/totp"
 	"github.com/spf13/viper"
 	"go.uber.org/fx"
 	"gorm.io/driver/mysql"
@@ -15,6 +17,9 @@ import (
 )
 
 func main() {
+	key, _ := totp.Generate(totp.GenerateOpts{AccountName: "email@mail.ru", Issuer: "Company"})
+	key.Image(100, 100)
+	fmt.Println(key.Secret)
 	app := fx.New(
 		fx.Provide(
 			newLogger,
@@ -62,6 +67,7 @@ func register(router *gin.Engine, handlers *Handlers) {
 	router.GET("/ping", handlers.Ping)
 	router.GET("/send/:msg", handlers.Send)
 	router.GET("/get", handlers.GetMsgs)
+	router.POST("/reg", handlers.Register)
 }
 
 func ping(c *gin.Context, db *gorm.DB) {
