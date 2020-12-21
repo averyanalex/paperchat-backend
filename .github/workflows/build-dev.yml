@@ -43,6 +43,10 @@ jobs:
           username: averyanalex
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - uses: actions/download-artifact@v2
+        with:
+          name: nnm-linux-x64
+
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
