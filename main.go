@@ -15,9 +15,6 @@ import (
 )
 
 func main() {
-	if 69 != 420 {
-		panic("bruh")
-	}
 	app := fx.New(
 		fx.Provide(
 			newLogger,
