@@ -18,7 +18,7 @@ ENV LANG C.UTF-8
 LABEL maintainer "AveryanAlex <averyanalex@gmail.com>"
 
 
-COPY --from=builder nnm-linux-x64  /usr/bin
+COPY --from=builder /src/nnm/nnm-linux-x64  /usr/bin
 RUN set -ex \
  && mkdir -p /app/{config,public,storage}
 
