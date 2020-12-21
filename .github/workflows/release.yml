@@ -59,21 +59,21 @@ jobs:
               averyanalex/nnm:${{ steps.short-sha.outputs.sha }}
               averyanalex/nnm:${{ github.event.release.tag }}
         - name: Image digest
-          run: echo ${{ steps.docker_build.outputs.digest }}:
-  assets:
-    needs: [build]
-    name: Add assets to release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - uses: actions/download-artifact@v2
+          run: echo ${{ steps.docker_build.outputs.digest }}
+    assets:
+      needs: [build]
+      name: Add assets to release
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+        - uses: actions/download-artifact@v2
           with:
-          name: nnm-linux-x64
-      - name: Build project
-        run: |
-          zip --junk-paths linux-x64 README.md nnm-linux-x64 base.env
-      - uses: shogo82148/actions-upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: linux-x64.zip
+            name: nnm-linux-x64
+        - name: Build project
+          run: |
+            zip --junk-paths linux-x64 README.md nnm-linux-x64 base.env
+        - uses: shogo82148/actions-upload-release-asset@v1
+          with:
+            upload_url: ${{ github.event.release.upload_url }}
+            asset_path: linux-x64.zip
