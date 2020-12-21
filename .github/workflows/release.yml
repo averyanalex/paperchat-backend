@@ -4,7 +4,7 @@ on:
       - published
 
 jobs:
-    build:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -21,7 +21,7 @@ jobs:
         with:
           name: nnm-windows-x64.exe
           path: nnm-windows-x64.exe
-    docker:
+  docker:
       runs-on: ubuntu-latest
       steps:
         - name: Set up QEMU
@@ -60,7 +60,7 @@ jobs:
               averyanalex/nnm:${{ github.event.release.tag }}
         - name: Image digest
           run: echo ${{ steps.docker_build.outputs.digest }}
-    assets:
+  assets:
       needs: [build]
       name: Add assets to release
       runs-on: ubuntu-latest
