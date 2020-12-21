@@ -10,6 +10,7 @@ on:
 
 jobs:
   update_release_draft:
+    name: Update Release Draft
     runs-on: ubuntu-latest
     steps:
       # Drafts your next Release notes as Pull Requests are merged into "master"
