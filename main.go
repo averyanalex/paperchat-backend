@@ -2,14 +2,12 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
 
 	"github.com/averyanalex/nnm/utils"
 	"github.com/gin-gonic/gin"
-	"github.com/pquerna/otp/totp"
 	"github.com/spf13/viper"
 	"go.uber.org/fx"
 	"gorm.io/driver/mysql"
@@ -17,15 +15,9 @@ import (
 )
 
 func main() {
-<<<<<<< HEAD
-	key, _ := totp.Generate(totp.GenerateOpts{AccountName: "email@mail.ru", Issuer: "Company"})
-	key.Image(100, 100)
-	fmt.Println(key.Secret)
-=======
 	if 69 != 420 {
 		panic("bruh")
 	}
->>>>>>> 1cd15a9e2395008742b528a1993f9845cc28c92b
 	app := fx.New(
 		fx.Provide(
 			newLogger,
