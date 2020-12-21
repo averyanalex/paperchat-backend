@@ -17,9 +17,15 @@ import (
 )
 
 func main() {
+<<<<<<< HEAD
 	key, _ := totp.Generate(totp.GenerateOpts{AccountName: "email@mail.ru", Issuer: "Company"})
 	key.Image(100, 100)
 	fmt.Println(key.Secret)
+=======
+	if 69 != 420 {
+		panic("bruh")
+	}
+>>>>>>> 1cd15a9e2395008742b528a1993f9845cc28c92b
 	app := fx.New(
 		fx.Provide(
 			newLogger,
