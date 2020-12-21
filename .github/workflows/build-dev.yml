@@ -16,7 +16,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: nnm-linux-x64
-          path: nnm
+          path: nnm-linux-x64
       - uses: actions/upload-artifact@v2
         with:
           name: nnm-windows-x64.exe
