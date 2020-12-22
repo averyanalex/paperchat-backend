@@ -7,16 +7,19 @@ import (
 	"gorm.io/gorm"
 )
 
+// Handlers contain DB and have methods to process requests
 type Handlers struct {
 	DB *gorm.DB
 }
 
+// SetupHandlers create new Handlers with given DB
 func SetupHandlers(db *gorm.DB) *Handlers {
 	return &Handlers{DB: db}
 }
 
+// Ping fuctions will help to test API status
 func (h Handlers) Ping(c *gin.Context) {
-	c.String(200, "Pong!")
+	c.JSON(200, &Result{Message: "Pong!"})
 }
 
 // Send will save sent message
@@ -27,7 +30,7 @@ func (h Handlers) Send(c *gin.Context) {
 		h.DB.Create(msg)
 		c.Status(200)
 	} else {
-		c.JSON(400, &ClientError{Error: "Empty Message"})
+		c.JSON(400, &Result{Error: "Empty Message"})
 	}
 }
 
@@ -40,11 +43,11 @@ func (h Handlers) GetMsgs(c *gin.Context) {
 	if countStated {
 		count, err = strconv.Atoi(countString)
 		if err != nil {
-			c.JSON(400, &ClientError{Error: "Failed to parse count to int"})
+			c.JSON(400, &Result{Error: "Failed to parse count to int"})
 			return
 		}
 		if count > 75 {
-			c.JSON(400, &ClientError{Error: "Messages count to large. Maximum is 75"})
+			c.JSON(400, &Result{Error: "Messages count to large. Maximum is 75"})
 			return
 		}
 	}
@@ -53,7 +56,7 @@ func (h Handlers) GetMsgs(c *gin.Context) {
 		var start int
 		start, err = strconv.Atoi(startString)
 		if err != nil {
-			c.JSON(400, &ClientError{Error: "Failed to parse start to int"})
+			c.JSON(400, &Result{Error: "Failed to parse start to int"})
 			return
 		}
 		h.DB.Model(&Message{}).Where("id <= ?", start).Order("id DESC").Limit(count).Find(&msg)
