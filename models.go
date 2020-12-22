@@ -9,12 +9,12 @@ import (
 // User is a structure than contain user data
 type User struct {
 	gorm.Model
-	ID      uint     `json:"id" gorm:"primary_key"`
-	Name    string   `json:"name" gorm:"size:30"`
-	Guilds  []*Guild `gorm:"many2many:user_guilds"`
-	Friends []*User  `gorm:"many2many:user_friends"`
-	Password string    `json:"password"`
-	Email    string    `json:"email"`
+	ID       uint     `json:"id" gorm:"primary_key"`
+	Name     string   `json:"name" gorm:"size:30"`
+	Guilds   []*Guild `gorm:"many2many:user_guilds"`
+	Friends  []*User  `gorm:"many2many:user_friends"`
+	Password string   `json:"password"`
+	Email    string   `json:"email"`
 }
 
 // Guild contain guild data
@@ -47,12 +47,13 @@ type Message struct {
 
 // MessageToUser structure sent to client when he request messages
 type MessageToUser struct {
-	ID          uint        `json:"id" gorm:"primary_key"`
-	CreatedAt   time.Time   `json:"time"`
-	Content     string      `json:"content"`
+	ID        uint      `json:"id" gorm:"primary_key"`
+	CreatedAt time.Time `json:"time"`
+	Content   string    `json:"content"`
 }
 
-// ClientError is an error structure sent to client if he wrong
-type ClientError struct {
-	Error string `json:"error"`
+// Result is an error structure sent to client if he wrong
+type Result struct {
+	Error   string `json:"error"`
+	Message string `json:"message"`
 }
