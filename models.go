@@ -39,6 +39,7 @@ type Message struct {
 	gorm.Model
 	ID      uint   `json:"id" gorm:"primary_key"`
 	Content string `json:"content"`
+	IP      string    `json:"ip"`
 	//UserID    uint
 	//User      User
 	//ChannelID uint
@@ -50,6 +51,7 @@ type MessageToUser struct {
 	ID        uint      `json:"id" gorm:"primary_key"`
 	CreatedAt time.Time `json:"time"`
 	Content   string    `json:"content"`
+	IP        string    `json:"ip"`
 }
 
 // Result is an error structure sent to client if he wrong
