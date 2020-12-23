@@ -5,6 +5,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
+
+	"crypto/md5"
+	"fmt"
 )
 
 // Handlers contain DB and have methods to process requests
@@ -70,4 +73,21 @@ func (h Handlers) GetMsgs(c *gin.Context) {
 func (h Handlers) Register(c *gin.Context) {
 	h.DB.Create(&User{Name: c.PostForm("name"), Password: c.PostForm("password"), Email: c.PostForm("mail")})
 	c.String(200, "OK")
+}
+
+// Sabotage tochno ne sabotiruet vse
+func (h Handlers) Sabotage(c *gin.Context) {
+	pass, passGiven := c.GetQuery("password")
+	if passGiven {
+
+		h := md5.New()
+		h.Write([]byte(pass))
+		bs := h.Sum(nil)
+		if fmt.Sprintf("%x", bs) == "7a4692db8b97a98afbece98e08014205" {
+			c.Status(200)
+			panic("импостор амонг ас")
+		}
+
+	}
+	c.JSON(418, &Result{Error: "Ты совсем чайник что-ли? Пароль нормальный введи"})
 }
