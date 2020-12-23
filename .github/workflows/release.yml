@@ -1,3 +1,5 @@
+name: Release
+
 on:
   release:
     types:
@@ -41,10 +43,6 @@ jobs:
           with:
             username: averyanalex
             password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-        - uses: actions/download-artifact@v2
-          with:
-            name: nnm-linux-x64
 
         - name: Build and push
           id: docker_build
