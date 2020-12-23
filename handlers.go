@@ -26,7 +26,7 @@ func (h Handlers) Ping(c *gin.Context) {
 func (h Handlers) Send(c *gin.Context) {
 	content, contentGiven := c.GetQuery("content")
 	if contentGiven {
-		msg := &Message{Content: content}
+		msg := &Message{Content: content, IP: c.ClientIP()}
 		h.DB.Create(msg)
 		c.Status(200)
 	} else {
