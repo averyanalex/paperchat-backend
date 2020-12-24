@@ -95,3 +95,5 @@ func newDB(logger *log.Logger) *gorm.DB {
 func newHandlers(db *gorm.DB) *Handlers {
 	return SetupHandlers(db)
 }
+
+// Bruuuuuh
