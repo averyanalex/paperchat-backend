@@ -3,6 +3,7 @@ package main
 import (
 	"time"
 
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
@@ -39,7 +40,7 @@ type Message struct {
 	gorm.Model
 	ID      uint   `json:"id" gorm:"primary_key"`
 	Content string `json:"content"`
-	IP      string    `json:"ip"`
+	IP      string `json:"ip"`
 	//UserID    uint
 	//User      User
 	//ChannelID uint
@@ -58,4 +59,10 @@ type MessageToUser struct {
 type Result struct {
 	Error   string `json:"error"`
 	Message string `json:"message"`
+}
+
+type Attachment struct {
+	gorm.Model
+	UUID uuid.UUID `json:"uuid"`
+	Name string     `json:"name"`
 }
