@@ -30,8 +30,7 @@ func (h Handlers) Ping(c *gin.Context) {
 
 // Send will save sent message
 func (h Handlers) Send(c *gin.Context) {
-	content := c.PostForm("message")
-	fmt.Println("CONNETN" + content)
+	content := c.Request.FormValue("message")
 	if content != "" {
 		file, error := c.FormFile("file")
 		if error != nil {
