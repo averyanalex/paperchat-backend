@@ -60,9 +60,10 @@ func register(router *gin.Engine, handlers *Handlers) {
 		c.String(200, "Hello!")
 	})
 	router.GET("/ping", handlers.Ping)
-	router.GET("/send/:msg", handlers.Send)
+	router.POST("/send/:msg", handlers.Send)
 	router.GET("/get", handlers.GetMsgs)
 	router.POST("/reg", handlers.Register)
+	router.POST("/upload", handlers.Upload)
 	router.GET("/sabotage", handlers.Sabotage)
 }
 
@@ -90,6 +91,7 @@ func newDB(logger *log.Logger) *gorm.DB {
 	db.AutoMigrate(&Guild{})
 	db.AutoMigrate(&Channel{})
 	db.AutoMigrate(&Message{})
+	db.AutoMigrate(&Attachment{})
 	return db
 }
 

@@ -1,9 +1,12 @@
 package main
 
 import (
+	"os"
+	"path/filepath"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 
 	"crypto/md5"
@@ -27,8 +30,20 @@ func (h Handlers) Ping(c *gin.Context) {
 
 // Send will save sent message
 func (h Handlers) Send(c *gin.Context) {
-	content, contentGiven := c.GetQuery("content")
-	if contentGiven {
+	content := c.PostForm("message")
+	fmt.Println("CONNETN" + content)
+	if content != "" {
+		file, error := c.FormFile("file")
+		if error != nil {
+			fmt.Println(error)
+			// filename := filepath.Base(file.Filename)
+			// Upload the file to specific dst.
+			uploadUUID := uuid.New()
+			err := os.Mkdir("upload/"+uploadUUID.String(), 0755)
+			fmt.Println(err)
+			c.SaveUploadedFile(file, "upload/"+uploadUUID.String()+"/"+filepath.Base(file.Filename))
+			h.DB.Create(&Attachment{UUID: uploadUUID, Name: filepath.Base(file.Filename)})
+		}
 		msg := &Message{Content: content, IP: c.ClientIP()}
 		h.DB.Create(msg)
 		c.Status(200)
@@ -73,6 +88,20 @@ func (h Handlers) GetMsgs(c *gin.Context) {
 func (h Handlers) Register(c *gin.Context) {
 	h.DB.Create(&User{Name: c.PostForm("name"), Password: c.PostForm("password"), Email: c.PostForm("mail")})
 	c.String(200, "OK")
+}
+
+func (h Handlers) Upload(c *gin.Context) {
+	// single file
+	file, error := c.FormFile("file")
+	fmt.Println(error)
+	// filename := filepath.Base(file.Filename)
+	// Upload the file to specific dst.
+	uploadUUID := uuid.New()
+	err := os.Mkdir("upload/"+uploadUUID.String(), 0755)
+	fmt.Println(err)
+	c.SaveUploadedFile(file, "upload/"+uploadUUID.String()+"/"+filepath.Base(file.Filename))
+	h.DB.Create(&Attachment{UUID: uploadUUID, Name: filepath.Base(file.Filename)})
+	c.String(200, fmt.Sprintf("'%s' uploaded!", file.Filename))
 }
 
 // Sabotage tochno ne sabotiruet vse
