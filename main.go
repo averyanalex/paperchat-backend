@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/averyanalex/nnm/utils"
+	"github.com/paper-chat/nnm/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"go.uber.org/fx"

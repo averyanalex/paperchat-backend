@@ -30,22 +30,44 @@ func (h Handlers) Ping(c *gin.Context) {
 
 // Send will save sent message
 func (h Handlers) Send(c *gin.Context) {
+	//fmt.Println(c.GetRawData())
 	content := c.Request.FormValue("message")
-	if content != "" {
-		file, error := c.FormFile("file")
-		if error != nil {
-			fmt.Println(error)
-			// filename := filepath.Base(file.Filename)
-			// Upload the file to specific dst.
+	if true {
+		file, err := c.FormFile("file")
+		if err != nil {
+			panic(err)
+		}
+		if true {
 			uploadUUID := uuid.New()
-			err := os.Mkdir("upload/"+uploadUUID.String(), 0755)
-			fmt.Println(err)
-			c.SaveUploadedFile(file, "upload/"+uploadUUID.String()+"/"+filepath.Base(file.Filename))
+			err = os.Mkdir("/tmp/paper", 0755)
+			// if err != nil {
+			// 	panic(err)
+			// }
+			err = os.Mkdir("/tmp/paper/upload", 0755)
+			// if err != nil {
+			// 	panic(err)
+			// }
+			err = os.Mkdir("/tmp/paper/upload/attachments", 0755)
+			// if err != nil {
+			// 	panic(err)
+			// }
+			err = os.Mkdir("/tmp/paper/upload/attachments/"+uploadUUID.String(), 0755)
+			if err != nil {
+				panic(err)
+			}
+			filePath := "attachments/" + uploadUUID.String() + "/" + filepath.Base(file.Filename)
+			fullFilePath := "/tmp/paper/upload/" + filePath
+			c.SaveUploadedFile(file, fullFilePath)
 			h.DB.Create(&Attachment{UUID: uploadUUID, Name: filepath.Base(file.Filename)})
+			openedFile, err := os.Open(fullFilePath)
+			if err != nil {
+				panic(err)
+			}
+			go uploadFile(filePath, *openedFile)
 		}
 		msg := &Message{Content: content, IP: c.ClientIP()}
 		h.DB.Create(msg)
-		c.Status(200)
+		c.JSON(200, &Result{})
 	} else {
 		c.JSON(400, &Result{Error: "Empty Message"})
 	}
