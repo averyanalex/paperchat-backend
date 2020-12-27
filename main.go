@@ -2,12 +2,16 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
 
-	"github.com/paper-chat/nnm/utils"
+	"github.com/bwmarrin/snowflake"
 	"github.com/gin-gonic/gin"
+	"github.com/paper-chat/nnm/handlers"
+	"github.com/paper-chat/nnm/models"
+	"github.com/paper-chat/nnm/utils"
 	"github.com/spf13/viper"
 	"go.uber.org/fx"
 	"gorm.io/driver/mysql"
@@ -15,12 +19,14 @@ import (
 )
 
 func main() {
+	fmt.Println(utils.HashPassword("ban"))
 	app := fx.New(
 		fx.Provide(
 			newLogger,
 			newGin,
 			newDB,
 			newHandlers,
+			newSnowflakeNode,
 		),
 		fx.Invoke(register),
 	)
@@ -55,16 +61,16 @@ func newLogger() *log.Logger {
 	return logger
 }
 
-func register(router *gin.Engine, handlers *Handlers) {
+func register(router *gin.Engine, handlers *handlers.Handlers) {
 	router.GET("/", func(c *gin.Context) {
 		c.String(200, "Hello!")
 	})
-	router.GET("/ping", handlers.Ping)
+	// router.GET("/ping", handlers.Ping)
 	router.POST("/send/:msg", handlers.Send)
 	router.GET("/get", handlers.GetMsgs)
-	router.POST("/reg", handlers.Register)
-	router.POST("/upload", handlers.Upload)
-	router.GET("/sabotage", handlers.Sabotage)
+	// router.POST("/reg", handlers.Register)
+	// router.POST("/upload", handlers.Upload)
+	// router.GET("/sabotage", handlers.Sabotage)
 }
 
 func ping(c *gin.Context, db *gorm.DB) {
@@ -87,16 +93,22 @@ func newDB(logger *log.Logger) *gorm.DB {
 	if err != nil {
 		panic(err)
 	}
-	db.AutoMigrate(&User{})
-	db.AutoMigrate(&Guild{})
-	db.AutoMigrate(&Channel{})
-	db.AutoMigrate(&Message{})
-	db.AutoMigrate(&Attachment{})
+	db.AutoMigrate(&models.User{})
+	db.AutoMigrate(&models.Guild{})
+	db.AutoMigrate(&models.Channel{})
+	db.AutoMigrate(&models.Message{})
+	db.AutoMigrate(&models.Attachment{})
 	return db
 }
 
-func newHandlers(db *gorm.DB) *Handlers {
-	return SetupHandlers(db)
+func newHandlers(db *gorm.DB, sfnode *snowflake.Node) *handlers.Handlers {
+	return &handlers.Handlers{DB: db, SFNode: sfnode}
 }
 
-// Bruuuuuh
+func newSnowflakeNode() *snowflake.Node {
+	node, err := snowflake.NewNode(1)
+	if err != nil {
+		panic(err)
+	}
+	return node
+}
