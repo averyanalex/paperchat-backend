@@ -1,4 +1,4 @@
-package main
+package utils
 
 import (
 	"context"
@@ -24,7 +24,7 @@ import (
 // Usage:
 //   # Upload myfile.txt to myBucket/myKey. Must complete within 10 minutes or will fail
 //   go run withContext.go -b mybucket -k myKey -d 10m < myfile.txt
-func uploadFile(key string, file os.File) {
+func UploadFile(key string, file os.File) {
 	timeout := time.Minute
 
 	// flag.StringVar(&bucket, "b", "", "Bucket name.")
