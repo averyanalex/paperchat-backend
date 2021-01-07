@@ -4,4 +4,5 @@ package models
 type Result struct {
 	Error   string `json:"error"`
 	Message string `json:"message"`
+	Code    string `json:"code"`
 }

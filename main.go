@@ -28,7 +28,7 @@ func main() {
 			newHandlers,
 			newSnowflakeNode,
 		),
-		fx.Invoke(register),
+		fx.Invoke(handlers.Setup),
 	)
 	app.Run()
 }
@@ -59,18 +59,6 @@ func newLogger() *log.Logger {
 	logger := log.New(os.Stdout, "" /* prefix */, 0 /* flags */)
 	logger.Print("Executing NewLogger.")
 	return logger
-}
-
-func register(router *gin.Engine, handlers *handlers.Handlers) {
-	router.GET("/", func(c *gin.Context) {
-		c.String(200, "Hello!")
-	})
-	// router.GET("/ping", handlers.Ping)
-	router.POST("/send/:msg", handlers.Send)
-	router.GET("/get", handlers.GetMsgs)
-	// router.POST("/reg", handlers.Register)
-	// router.POST("/upload", handlers.Upload)
-	// router.GET("/sabotage", handlers.Sabotage)
 }
 
 func ping(c *gin.Context, db *gorm.DB) {
