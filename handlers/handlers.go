@@ -4,6 +4,7 @@ import (
 	"github.com/bwmarrin/snowflake"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
+	"github.com/gin-contrib/cors"
 )
 
 type Handlers struct {
@@ -13,6 +14,7 @@ type Handlers struct {
 
 // Setup will add handlers to api
 func Setup(router *gin.Engine, handlers *Handlers) {
+	router.Use(cors.Default())
 	router.GET("/", func(c *gin.Context) {
 		c.String(200, "Hello!")
 	})
