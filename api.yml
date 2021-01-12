@@ -11,3 +11,7 @@ s3:
   bucket: "paper"
   endpoint: "storage.yandexcloud.net"
   region: "ru-central1"
+influxdb:
+  enabled: true
+  token: "8kaQKWedoISuNjeXEZC9tEgKlWHzTTrhmylfKJy_LLHZeXPh0SzuZCuWGz3Gcjrf1gG4zU1gPyDvDOR3gcQu8g=="
+  address: "http://db.synthworld.ru:8086"
