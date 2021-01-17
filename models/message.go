@@ -9,6 +9,7 @@ type Message struct {
 	ID      uint   `json:"id" gorm:"primary_key"`
 	Content string `json:"content"`
 	IP      string `json:"ip"`
+	Chat    string
 	//UserID    uint
 	//User      User
 	//ChannelID uint

@@ -42,7 +42,7 @@ func (h Handlers) Send(c *gin.Context) {
 		// 	}
 		// 	go utils.UploadFile(filePath, *openedFile)
 		// }
-		msg := &models.Message{Content: content, IP: c.ClientIP(), ID: uint(h.SFNode.Generate().Int64())}
+		msg := &models.Message{Content: content, IP: c.ClientIP(), ID: uint(h.SFNode.Generate().Int64()), Chat: c.Param("id")}
 		h.DB.Create(msg)
 		c.JSON(200, &models.Result{})
 	} else {

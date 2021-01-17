@@ -2,9 +2,9 @@ package handlers
 
 import (
 	"github.com/bwmarrin/snowflake"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
-	"github.com/gin-contrib/cors"
 )
 
 type Handlers struct {
@@ -15,12 +15,13 @@ type Handlers struct {
 // Setup will add handlers to api
 func Setup(router *gin.Engine, handlers *Handlers) {
 	router.Use(cors.Default())
+	v1 := router.Group("/v1")
 	router.GET("/", func(c *gin.Context) {
 		c.String(200, "Hello!")
 	})
 	// router.GET("/ping", handlers.Ping)
-	router.POST("/send/:msg", handlers.Send)
-	router.GET("/get", handlers.GetMsgs)
+	v1.POST("/chat/:id/send", handlers.Send)
+	v1.GET("/chat/:id/get", handlers.GetMsgs)
 	router.POST("/register", handlers.Register)
 	// router.POST("/reg", handlers.Register)
 	// router.POST("/upload", handlers.Upload)
