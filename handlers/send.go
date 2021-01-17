@@ -3,6 +3,7 @@ package handlers
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/paper-chat/nnm/models"
+	"github.com/paper-chat/nnm/utils"
 )
 
 // Send will save sent message
@@ -43,7 +44,8 @@ func (h Handlers) Send(c *gin.Context) {
 		// 	go utils.UploadFile(filePath, *openedFile)
 		// }
 		msg := &models.Message{Content: content, IP: c.ClientIP(), ID: uint(h.SFNode.Generate().Int64()), Chat: c.Param("id")}
-		h.DB.Create(msg)
+		err := h.DB.Create(msg).Error
+		utils.CheckError(&err)
 		c.JSON(200, &models.Result{})
 	} else {
 		c.JSON(400, &models.Result{Error: "Empty Message"})

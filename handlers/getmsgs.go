@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/paper-chat/nnm/models"
+	"github.com/paper-chat/nnm/utils"
 )
 
 // GetMsgs will send requested messages to client
@@ -32,9 +33,11 @@ func (h Handlers) GetMsgs(c *gin.Context) {
 			c.JSON(400, &models.Result{Error: "Failed to parse start to int"})
 			return
 		}
-		h.DB.Model(&models.Message{}).Where("id <= ?", start).Where("chat = ?", c.Param("id")).Order("id DESC").Limit(count).Find(&msg)
+		err := h.DB.Model(&models.Message{}).Where("id <= ?", start).Where("chat = ?", c.Param("id")).Order("id DESC").Limit(count).Find(&msg).Error
+		utils.CheckError(&err)
 	} else {
-		h.DB.Model(&models.Message{}).Where("chat = ?", c.Param("id")).Order("id DESC").Limit(count).Find(&msg)
+		err := h.DB.Model(&models.Message{}).Where("chat = ?", c.Param("id")).Order("id DESC").Limit(count).Find(&msg).Error
+		utils.CheckError(&err)
 	}
 	c.JSON(200, msg)
 }
