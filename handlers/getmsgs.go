@@ -32,9 +32,9 @@ func (h Handlers) GetMsgs(c *gin.Context) {
 			c.JSON(400, &models.Result{Error: "Failed to parse start to int"})
 			return
 		}
-		h.DB.Model(&models.Message{}).Where("id <= ?", start).Where("chat == ?", c.Param("id")).Order("id DESC").Limit(count).Find(&msg)
+		h.DB.Model(&models.Message{}).Where("id <= ?", start).Where("chat = ?", c.Param("id")).Order("id DESC").Limit(count).Find(&msg)
 	} else {
-		h.DB.Model(&models.Message{}).Where("chat == ?", c.Param("id")).Order("id DESC").Limit(count).Find(&msg)
+		h.DB.Model(&models.Message{}).Where("chat = ?", c.Param("id")).Order("id DESC").Limit(count).Find(&msg)
 	}
 	c.JSON(200, msg)
 }
